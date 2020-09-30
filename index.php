@@ -13,7 +13,7 @@
         <link rel="stylesheet" media="screen" href="css/css.css">
         <link rel="stylesheet" media="screen" href="css/index.css">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
-        <meta name="google-signin-client_id" content="940258222686-i18bes7habu60jr3cns1hovm549hrsq3.apps.googleusercontent.com">
+        <meta name="google-signin-client_id" content="967580510442-4fpfl1b3u31jmkki8df96g5r9ff5rqv9.apps.googleusercontent.com">
 	</head>
 	<body>
 		<div class="navbar nav-block">
