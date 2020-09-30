@@ -62,7 +62,7 @@
 				getUserData($_POST["user"]);
 				break;
 		case "userverification":
-				getUserData($_POST["user"]);
+				UserVerification($_POST["user"], $_POST["password"]);
 				break;
 		default:
 				die();
