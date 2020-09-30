@@ -1,0 +1,41 @@
+/*PAGE: the-lorem-ipsum*/
+.parallax {
+	min-height: 500px;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.PG {
+	background-image: url("../Fotos/crime.webp");
+	image-orientation: from-image;
+}
+.PE1 {
+	background-image: url("../Fotos/E1.webp");
+	image-orientation: from-image;
+}
+.PK {
+	background-image: url("../Fotos/K.webp");
+	image-orientation: from-image;
+}
+.PE2 {
+	background-image: url("../Fotos/E2.webp");
+	image-orientation: from-image;
+}
+.quote-container {
+	padding: 25px 0 25px 0;
+	width: 100%;
+}
+.quote-container .quote {
+	margin: auto;
+	width: 80%;
+	overflow: visible;
+	position: relative;
+}
+.quote-container .quote .quote-text {
+	margin: auto;
+	display: block;
+	white-space: pre-wrap;
+	text-align: justify;
+	position: relative;
+}

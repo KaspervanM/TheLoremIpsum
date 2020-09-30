@@ -1,0 +1,50 @@
+/*PAGE: generator*/
+.table{
+	margin: auto;
+	margin-top: 5.5em;
+	width: 90%;
+	height: 80vh;
+	clear: both;
+	border: 1px solid black;
+	display: table;
+}
+.cell {
+	padding: 1em;
+	padding-bottom: 6em;
+	display: table-cell;
+	vertical-align: top;
+	height: 100%;
+}
+.re{
+	bborder-right: 1px solid black;
+	resize: horizontal;
+	overflow: hidden;
+	width: 35%;
+}
+.form1{
+	height: 110%;
+}
+.form2{
+	float: right;
+	margin-top: 0.6em;
+}
+.o{
+	resize:none;
+	width: 100%;
+	height: 110%;
+}
+.fullLoremgen-container {
+	width: 100%;
+	background-image: linear-gradient(to bottom right,rgba(0, 0, 0,.95),rgba(102, 102, 102,.95));
+	color: whitesmoke;
+}
+.fullLoremgen {
+	width: 90%;
+	margin: auto;
+}
+.fullLoremgen-text {
+	vertical-align: top;
+	white-space: pre-wrap;
+	text-align: justify;
+	padding: 15px;
+}

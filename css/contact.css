@@ -1,0 +1,39 @@
+/*PAGE contact*/
+.formcont{
+    width: 100%;
+    height: 50%;
+    padding: 20px;
+	background-image: linear-gradient(to bottom right,rgba(0, 0, 0,.95),rgba(102, 102, 102,.95));
+	width: 100%;
+	padding: 50px 0 50px 0;
+	text-align: left;
+}
+.contactForm{
+    width: 50%;
+    margin-left: 10%;
+}
+.success {
+    color: #50a7c2;
+}
+.failure {
+    color:red;
+}
+.imgEnlarge{
+    width: 80%;
+    margin: auto;
+}
+.imgEnlargeCont{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    height: 50vh;
+    margin: auto;
+}
+.eImg{
+    bottom: 0;
+    height: 50%;
+    width: 20%;
+    padding: 2px;
+    object-fit: cover;
+}

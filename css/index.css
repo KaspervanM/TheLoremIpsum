@@ -1,0 +1,113 @@
+/*PAGE:  home*/
+.Lorem-container {
+	display: inline-block;
+	padding: 5px;
+	width: 500px;
+}
+.Lorem-container img {
+ 	width: 100%;
+}
+.about {
+	width: 90%;
+	height: auto;
+	margin: auto;
+	overflow: hidden;
+	text-align: justify;
+}
+.about-text {
+	width: 50%;
+	display: inline-block;
+	padding: 15px;
+	vertical-align: top;
+}
+.fullLorem-container {
+	width: 100%;
+	background-image: linear-gradient(to bottom right,rgba(0, 0, 0,.95),rgba(102, 102, 102,.95));
+	color: whitesmoke;
+}
+.fullLorem {
+	width: 90%;
+	margin: auto;
+}
+.fullLorem-text {
+	vertical-align: top;
+	white-space: pre-wrap;
+	text-align: justify;
+	padding: 15px;
+}
+.wrapper {
+	max-width: 680px;
+	margin: 60px auto;
+	padding: 0 20px;
+}
+
+.youtube {
+	width: 560px;
+	height: 315px;
+	background-color: #000;
+	position: relative;
+	left: 0;
+}
+.youtube img {
+    width: 100%;
+    height: 100%;
+	opacity: 0.7;
+}
+.youtube .play-button {
+	width: 90px;
+	height: 60px;
+	background-color: #333;
+	box-shadow: 0 0 30px rgba( 0,0,0,0.6 );
+	z-index: 1;
+	opacity: 0.8;
+	border-radius: 6px;
+}
+.youtube .play-button:before {
+	content: "";
+	border-style: solid;
+	border-width: 15px 0 15px 26.0px;
+	border-color: transparent transparent transparent #fff;
+}
+.youtube img, .youtube .play-button {
+	cursor: pointer;
+}
+.youtube img, .youtube iframe, .youtube .play-button, .youtube .play-button:before {
+	position: absolute;
+}
+.youtube .play-button, .youtube .play-button:before {
+	top: 50%;
+	left: 50%;
+	transform: translate3d( -50%, -50%, 0 );
+}
+.youtube iframe {
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+.team {
+	width: 90%;
+	margin: auto;
+	overflow: visible;
+}
+.team .people-container {
+	margin: auto;
+	width: 49%;
+}
+.team .person{
+	width: 40%;
+	min-width: 350px;
+	display: inline-block;
+}
+.team .person p{
+	width: 95%;
+	text-align: justify;
+}
+.team .person img{
+	width: 100%;
+	object-fit: cover;
+	object-position: 100% 50%;
+	image-orientation: from-image;
+	margin: auto;
+	display: block;
+}
