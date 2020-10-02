@@ -32,7 +32,6 @@
 
 		$query = "SELECT $select FROM Users WHERE username = '$user' OR email = '$user'";
 		if ($result = $conn->query($query)) {
-			var_dump($result->fetch_assoc());
 			die();
 		}
 	}
@@ -42,16 +41,16 @@
 
 		$query = "SELECT $select FROM Users WHERE username = '$user' OR email = '$user'";
 		if ($result = $conn->query($query)) {
-			var_dump($result->fetch_assoc());
 			die("STOPNOTE: User does not exist.");
 		}
 		
+		if (isset($_POST["google"])){
+			die();
+		}
 		$query = "SELECT $select FROM Users WHERE (username = '$user' OR email = '$user') AND password='$password'";
 		if ($result = $conn->query($query)) {
-			var_dump($result->fetch_assoc());
 			die("SUCCESS: User verified.");
 		}
-		
 	}
 
 	switch (strtolower($_POST["DB_interface"])){
