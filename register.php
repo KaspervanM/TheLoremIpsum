@@ -32,7 +32,7 @@
 		$("form").submit(function(event){
 			event.preventDefault();
 			var arr = $(this).serializeArray();
-			$.post("DB_interface.php", {DB_interface:arr[6]["value"], firstname:arr[0]["value"], infix:arr[1]["value"], lastname:arr[2]["value"], username:arr[3]["value"], password:arr[4]["value"], email:arr[5]["value"]},
+			$.post("DB_interface", {DB_interface:arr[6]["value"], firstname:arr[0]["value"], infix:arr[1]["value"], lastname:arr[2]["value"], username:arr[3]["value"], password:arr[4]["value"], email:arr[5]["value"]},
 				function success(e){
 					console.log(e);
 			});
