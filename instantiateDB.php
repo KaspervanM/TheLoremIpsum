@@ -1,13 +1,12 @@
 <?php
-$username = "loremipsum";
-$password = "password";
-$dbName = "LoremIpsumDB";
+$username = "id15005338_loremipsum";//"loremipsum";
+$password = "Lipsum12345!";
+$dbName = "id15005338_loremipsumdb";//"LoremIpsumDB";
 $servername = "localhost:3306";
 
-// Create connection
+/*
 $conn = new mysqli($servername, $username, $password);
 
-// Check connection
 if ($conn->connect_error) {
   die("Connection failed: ".$conn->connect_error);
 }
@@ -31,6 +30,7 @@ if (!$conn->query($query)->fetch_assoc()) {
 }
 
 $conn->close();
+*/
 
 $conn = new mysqli($servername, $username, $password, $dbName);
 
@@ -58,4 +58,10 @@ reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 	echo "Table 'Users' exists!";
 }
 
+$sql = "select * from Users";
+$res = $conn->query($sql);
+
+while ($row = $res->fetch_assoc()) {
+	print_r($row);
+}
 ?>
