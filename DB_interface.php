@@ -1,6 +1,6 @@
 <?php
 	if (!isset($_POST["DB_interface"])) die();
-	$servername = "localhost:3306";
+	$servername = "localhost";
 	$username = "loremipsum";
 	$password = "password";
 	$DBname = "LoremIpsumDB";
