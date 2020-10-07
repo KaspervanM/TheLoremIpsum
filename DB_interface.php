@@ -1,9 +1,9 @@
 <?php
 	if (!isset($_POST["DB_interface"])) die();
+	$username = "id15005338_loremipsum";//"loremipsum";
+	$password = "Lipsum12345!";
+	$DBName = "id15005338_loremipsumdb";//"LoremIpsumDB";
 	$servername = "localhost";
-	$username = "loremipsum";
-	$password = "password";
-	$DBname = "LoremIpsumDB";
 
 	$conn = new mysqli($servername, $username, $password, $DBname);
 
