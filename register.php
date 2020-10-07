@@ -12,7 +12,7 @@
 </head>
 <body>
 	<p id="out"></p>
-	<form action="DB_interface.php//return false" method="post">
+	<form action="DB_interface.php" method="post">
 		<input name="firstname" id="firstname" type="text" required placeholder="Name"/> <input name="infix" id="infix" type="text" size="3" value="" placeholder="infix"/> <input name="lastname" id="lastname" type="text" required placeholder="Surname"/>
 		<br/>
 		<br/>
