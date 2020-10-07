@@ -2,7 +2,7 @@
 $username = "id15005338_loremipsum";//"loremipsum";
 $password = "Lipsum12345!";
 $dbName = "id15005338_loremipsumdb";//"LoremIpsumDB";
-$servername = "localhost:3306";
+$servername = "localhost";
 
 /*
 $conn = new mysqli($servername, $username, $password);
