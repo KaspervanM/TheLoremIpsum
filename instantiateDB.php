@@ -34,6 +34,10 @@ $conn->close();
 
 $conn = new mysqli($servername, $username, $password, $dbName);
 
+if ($conn->connect_error) {
+  die("Connection failed: ".$conn->connect_error);
+}
+
 $query = "SHOW TABLES LIKE 'Users'";
 if (!$conn->query($query)->fetch_assoc()) {
 
