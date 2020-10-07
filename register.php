@@ -12,7 +12,7 @@
 </head>
 <body>
 	<p id="out"></p>
-	<form action="return False">
+	<form action="DB_interface.php//return false">
 		<input name="firstname" id="firstname" type="text" required placeholder="Name"/> <input name="infix" id="infix" type="text" size="3" value="" placeholder="infix"/> <input name="lastname" id="lastname" type="text" required placeholder="Surname"/>
 		<br/>
 		<br/>
@@ -29,14 +29,14 @@
 	</form><br/>
 	
 	<script>
-		$("form").submit(function(event){
+		/*$("form").submit(function(event){
 			event.preventDefault();
 			var arr = $(this).serializeArray();
 			$.post("DB_interface", {DB_interface:arr[6]["value"], firstname:arr[0]["value"], infix:arr[1]["value"], lastname:arr[2]["value"], username:arr[3]["value"], password:arr[4]["value"], email:arr[5]["value"]},
 				function success(e){
 					console.log(e);
 			});
-		});
+		});*/
 	</script>
 </body>
 </html>
