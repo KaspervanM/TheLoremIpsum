@@ -23,6 +23,16 @@
 		</form><br/>
 
 		<script>
+		function countDown(count){
+                var timer = document.getElementById("timer");
+                if(count > 0){
+                    count--;
+                    timer.innerHTML = "Login successful. This page will redirect in "+count+" seconds.";
+                    setTimeout("countDown("+count+")", 1000);
+                }else{
+                    window.location.replace("http://thenewlorem.000webhostapp.com");
+                }
+            }
 			$("form").submit(function(event){
 				event.preventDefault();
 				var arr = $(this).serializeArray();
