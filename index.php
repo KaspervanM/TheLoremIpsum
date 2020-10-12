@@ -53,7 +53,7 @@
                     $.post("DB_interface.php", {DB_interface:"insertuser", firtname:profile.getGivenName(), infix:iname, lastname:name[name.length-1], username:"", password:"", email:profile.getEmail() },
 			   function success(e){
 			   	console.log("Sent request to server successfully! (1)");
-			    	$.post("DB_interface.php", {DB_interface:"userverification", password:"", user:profile.getEmail(), google:"true"}, console.log("Sent request to server successfully! (2)");
+			    	$.post("DB_interface.php", {DB_interface:"userverification", password:"", user:profile.getEmail(), google:"true"}, function success(e) {console.log("Sent request to server successfully! (2)")});
 		    });
                 }
                 function onFailure(error) {
