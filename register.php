@@ -27,14 +27,27 @@
 			<br/>
 			<button action="submit"><span>Add</span></button>
 		</form><br/>
+		
+		<p id="timer"></p>
 
 		<script>
+		    function countDown(count){
+                var timer = document.getElementById("timer");
+                if(count > 0){
+                    count--;
+                    timer.innerHTML = "Account registered successfully. This page will redirect in "+count+" seconds.";
+                    setTimeout("countDown("+count+")", 1000);
+                }else{
+                    window.location.replace("http://thenewlorem.000webhostapp.com/login");
+                }
+            }
 			$("form").submit(function(event){
 				event.preventDefault();
 				var arr = $(this).serializeArray();
 				$.post("DB_interface", {DB_interface:arr[6]["value"], firstname:arr[0]["value"], infix:arr[1]["value"], lastname:arr[2]["value"], username:arr[3]["value"], password:arr[4]["value"], email:arr[5]["value"]},
 					function success(e){
 						console.log(e);
+						if (e.slice(5,12) == "SUCCESS") countDown(5);
 				});
 			});
 		</script>
