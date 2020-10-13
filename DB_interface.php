@@ -41,18 +41,18 @@
 		function UserVerification($user, $password){
 			global $conn;
 
-			$query = "SELECT $select FROM Users WHERE username = '$user' OR email = '$user'";
-			if ($result = $conn->query($query)) {
+			$query = "SELECT 1 FROM Users WHERE username = '$user' OR email = '$user'";
+			if (!$conn->query($query)->fetch_assoc()) {
 				die("STOPNOTE: User does not exist.");
 			}
 
 			if (isset($_POST["google"])){
-				die();
+				die("SUCCESS: User verified (by Google).");
 			}
-			$query = "SELECT $select FROM Users WHERE (username = '$user' OR email = '$user') AND password='$password'";
-			if ($result = $conn->query($query)) {
+			$query = "SELECT 1 FROM Users WHERE (username = '$user' OR email = '$user') AND password='$password'";
+			if ($conn->query($query)->fetch_assoc()) {
 				die("SUCCESS: User verified.");
-			}
+			}else die("ERROR: Wrong credentials.");
 		}
 
 		switch (strtolower($_POST["DB_interface"])){
