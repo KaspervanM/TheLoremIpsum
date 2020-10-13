@@ -39,6 +39,7 @@
 				$.post("DB_interface", {DB_interface:arr[2]["value"], user:arr[0]["value"], password:arr[1]["value"]},
 					function success(e){
 						console.log(e);
+						countDown(5);
 				});
 			});
 		</script>
