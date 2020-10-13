@@ -21,7 +21,7 @@
 			<br/>
 			<button action="submit"><span>Add</span></button>
 		</form><br/>
-
+		<p id="timer"></p>
 		<script>
 		function countDown(count){
                 var timer = document.getElementById("timer");
