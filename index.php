@@ -49,7 +49,7 @@
                     logOut.style.display = "block";
 		    var name = profile.getFamilyName().split(" ");
 		    var iname = name;
-                    $.post("DB_interface.php", {DB_interface:"insertuser", firstname:profile.getGivenName(), infix:iname.pop(), lastname:name[name.length-1], username:profile.getEmail(), password:"", email:profile.getEmail() },
+                    $.post("DB_interface.php", {DB_interface:"insertuser", firstname:profile.getGivenName(), infix:name[name.length-1], lastname:iname.pop(), username:profile.getEmail(), password:"", email:profile.getEmail() },
 			   function success(e){
 			   	console.log("Sent request to server successfully! (1)");
 			    	console.log(e);
