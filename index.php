@@ -41,15 +41,17 @@
                 function onSuccess(googleUser) {
                     var profile = googleUser.getBasicProfile();
                     var profPic = document.getElementById("profile-picture");
+                    var dir = "/Users/".concat(<?php session_start(); if(isset($_SESSION['Email'])) echo '"'.$_SESSION['Email'].'"'; ?>).concat("/pp.jpg");
+                    console.log(dir);
                     profPic.style.visibility = "visible";
-                    profPic.src = profile.getImageUrl();
+                    profPic.src = dir; //profile.getImageUrl();
                     profPic.width = "50"
                     profPic.height = "50";
                     var logOut = document.getElementById("logout");
                     logOut.style.display = "block";
-		    var name = profile.getFamilyName().split(" ");
-		    var iname = name;
-                    $.post("DB_interface.php", {DB_interface:"insertuser", firstname:profile.getGivenName(), infix:name[name.length-1], lastname:iname.pop(), username:profile.getEmail(), password:"", email:profile.getEmail() },
+		    var iname = profile.getFamilyName().split(" ");
+		    var lastname = iname.pop();
+                    $.post("DB_interface.php", {DB_interface:"insertuser", firstname:profile.getGivenName(), infix:iname.join(), lastname:lastname, username:profile.getEmail(), password:"", email:profile.getEmail(), google:"true", pp:profile.getImageUrl()},
 			   function success(e){
 			   	console.log("Sent request to server successfully! (1)");
 			    	console.log(e);
