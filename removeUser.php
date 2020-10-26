@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Add User</title>
+		<title>Remove User</title>
 		<meta charset="utf-8">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
@@ -15,7 +15,7 @@
 			<input name="user" type="text" required placeholder="Username or E-mail address"/>
 			<input type="hidden" name="DB_interface" value="removeUser"/>
 			<br/>
-			<button action="submit"><span>Add</span></button>
+			<button action="submit"><span>Remove</span></button>
 		</form><br/>
 		<p id="output"></p>
 		<script>
