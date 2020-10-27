@@ -38,7 +38,7 @@
 							<menuitem><a href=<?php echo "'".$jsonFile[3]["navbar"]["menuitem1"]["link"]."'"; ?>><?php echo $jsonFile[3]["navbar"]["menuitem1"]["name"]; ?></a></menuitem>
 							<menuitem><a href=<?php echo "'".$jsonFile[3]["navbar"]["menuitem2"]["link"]."'"; ?>><?php echo $jsonFile[3]["navbar"]["menuitem2"]["name"]; ?></a></menuitem>
 							<menuitem><a href=<?php echo "'".$jsonFile[3]["navbar"]["menuitem3"]["link"]."'"; ?>><?php echo $jsonFile[3]["navbar"]["menuitem3"]["name"]; ?></a></menuitem>
-							<menuitem><a id="logout"href=<?php echo "'".$jsonFile[3]["navbar"]["menuitem4"]["link"]."'"; ?> onclick=<?php echo "'".$jsonFile[3]["navbar"]["menuitem4"]["action"]."'"; ?>><?php echo $jsonFile[3]["navbar"]["menuitem4"]["name"]; ?></a></menuitem>
+							<menuitem><a id="logout"href=<?php echo "'".$jsonFile[3]["navbar"]["menuitem5"]["link"]."'"; ?> onclick=<?php echo "'".$jsonFile[3]["navbar"]["menuitem5"]["action"]."'"; ?>><?php echo $jsonFile[3]["navbar"]["menuitem5"]["name"]; ?></a></menuitem>
 						</menu>
 					</menuitem>
 				</menu>
