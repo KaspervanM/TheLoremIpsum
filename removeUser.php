@@ -1,3 +1,8 @@
+<?php
+session_start();
+if (!isset($_SESSION['User']))
+    if (!($_SESSION['User'] === "evan.pacini@gmail.com" || $_SESSION['User'] === "maasdam03@gmail.com" || $_SESSION['User'] === "maasdam03@gmail.com" || $_SESSION['User'] === "Kuijlaars")) header("Location: https://thenewlorem.000webhostapp.com/");
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,7 +17,8 @@
 	</head>
 	<body>
 		<form action="return false">
-			<input name="user" type="text" required placeholder="Username or E-mail address"/>
+			<input name="user" type="text" required autocomplete="username" placeholder="Username or E-mail address"/><br />
+			<input name="pass" type="password" required autocomplete="current-password" placeholder="Admin Password"/>
 			<input type="hidden" name="DB_interface" value="removeUser"/>
 			<br/>
 			<button action="submit"><span>Remove</span></button>
@@ -24,7 +30,7 @@
 				event.preventDefault();
 				var arr = $(this).serializeArray();
 				console.log(arr);
-				$.post("DB_interface", {DB_interface:arr[1]["value"], user:arr[0]["value"]},
+				$.post("DB_interface", {DB_interface:arr[2]["value"], pass:arr[1]["value"], user:arr[0]["value"]},
 					function success(e){
 						console.log(e);
 						output.innerHTML = e;
