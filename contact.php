@@ -21,12 +21,12 @@
 	<head lang="la">
 		<title><?php echo $jsonFile[3]["title"]; ?></title>
 		<meta charset="utf-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
         <link rel="stylesheet" media="screen" href="css/css.css">
         <link rel="stylesheet" media="screen" href="css/contact.css">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
-        <meta name="google-signin-client_id" content="967580510442-4fpfl1b3u31jmkki8df96g5r9ff5rqv9.apps.googleusercontent.com">
 	</head>
 	<body>
 		<div class="navbar nav-block">
@@ -44,41 +44,40 @@
 				</menu>
 			</nav>
 			<div class="cont"><p><?php echo $jsonFile[3]["navbar"]["header"]; ?></p></div>
-			<div class="cont_google">
-					<div class="g-signin2" data-onsuccess="onSuccess" data-onfailure="onFailure" data-theme="dark"></div>
-					<img id="profile-picture">
+			<div class="nav_box">
+			    <button class="loginButton" onclick="window.location.href = 'http://thenewlorem.000webhostapp.com/login';">Login</button>
+    			<img id="profile-picture">
+    			<button id="changePic" onclick="window.location.href = 'http://thenewlorem.000webhostapp.com/profilePic';">Change profile pic</button>
 			</div>
 			<script async defer>
-				function onSuccess(googleUser) {
-						var profile = googleUser.getBasicProfile();
-						var profPic = document.getElementById("profile-picture");
-						profPic.style.visibility = "visible";
-						profPic.src = profile.getImageUrl();
-						profPic.width = "50"
-						profPic.height = "50";
-						var logOut = document.getElementById("logout");
-						logOut.style.display = "block";
-
-						var name = profile.getFamilyName().split(" ")
-						$("#Fname").val(profile.getGivenName());
-						$("#Sname").val(name[name.length-1]);
-						name.pop();
-						$("#Iname").val(name);
-						$("#returnMail").val(profile.getEmail());
-				}
-				function onFailure(error) {
-						console.log(error);
-				}
-					function signOut() {
-						var auth2 = gapi.auth2.getAuthInstance();
-						auth2.signOut().then(function () {
-								var profPic = document.getElementById("profile-picture");
-								profPic.style.visibility = "hidden";
-								var logOut = document.getElementById("logout");
-								logOut.style.display = "none";
-						});
-					}
-			</script>
+                function setPic(){
+                    var profPic = document.getElementById("profile-picture");
+                    var dir = " <?php session_start(); if(isset($_SESSION['Email'])) { $dir = "Users/".$_SESSION["Email"]."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
+                    console.log(dir);
+                    profPic.style.visibility = "visible";
+                    profPic.src = dir;
+                }
+                function start(){
+                    <?php if(isset($SESSION['reload'])) {unset($SESSION['reload']); echo "location.reload(true);";} ?>
+                    if(<?php session_start(); if(isset($_SESSION['Email'])) echo 'true'; else echo "false"; ?>) {
+                        $(".nav_box").addClass('nav_box_logged-in')
+                        $("#changePic").css("display","block");
+                        $("#logout").css("display","block");
+                        $(".loginButton").css("display","none");
+                        setPic();
+                    }else{
+                        $(".loginButton").css("display","block");
+                    }
+                }
+                $(document).ready(start());
+                  function signOut() {
+                    $.post("destroySession.php", {session:"destroy"}, 
+					function success(e) {
+						console.log(e);
+					});
+					location.reload();
+                  }
+            </script>
 		</div>
         <img class="img" src="Fotos/contact-1.webp" alt="Lorem Ipsum">
 		<section class="formcont">
