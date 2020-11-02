@@ -8,6 +8,7 @@
 	<head lang="la">
 		<title><?php echo $jsonFile[1]["title"]; ?></title>
         <meta charset="utf-8">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <link rel="stylesheet" media="screen" href="css/css.css">
         <link rel="stylesheet" media="screen" href="css/the-lorem-ipsum.css">
@@ -31,32 +32,38 @@
 				</menu>
 			</nav>
 			<div class="cont"><p><?php echo $jsonFile[1]["navbar"]["header"]; ?></p></div>
-			<div class="cont_google">
-    			<div class="g-signin2" data-onsuccess="onSuccess" data-onfailure="onFailure" data-theme="dark"></div>
+			<div class="nav_box">
+			    <button class="loginButton" onclick="window.location.href = 'http://thenewlorem.000webhostapp.com/login';">Login</button>
     			<img id="profile-picture">
+    			<button id="changePic" onclick="window.location.href = 'http://thenewlorem.000webhostapp.com/profilePic';">Change profile pic</button>
 			</div>
             <script async defer>
-                function onSuccess(googleUser) {
-                    var profile = googleUser.getBasicProfile();
+                function setPic(){
                     var profPic = document.getElementById("profile-picture");
+                    var dir = " <?php session_start(); if(isset($_SESSION['Email'])) { $dir = "Users/".$_SESSION["Email"]."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
+                    console.log(dir);
                     profPic.style.visibility = "visible";
-                    profPic.src = profile.getImageUrl();
-                    profPic.width = "50"
-                    profPic.height = "50";
-                    var logOut = document.getElementById("logout");
-                    logOut.style.display = "block";
+                    profPic.src = dir;
                 }
-                function onFailure(error) {
-                    console.log(error);
+                function start(){
+                    <?php if(isset($SESSION['reload'])) {unset($SESSION['reload']); echo "location.reload(true);";} ?>
+                    if(<?php session_start(); if(isset($_SESSION['Email'])) echo 'true'; else echo "false"; ?>) {
+                        $(".nav_box").addClass('nav_box_logged-in')
+                        $("#changePic").css("display","block");
+                        $("#logout").css("display","block");
+                        $(".loginButton").css("display","none");
+                        setPic();
+                    }else{
+                        $(".loginButton").css("display","block");
+                    }
                 }
+                $(document).ready(start());
                   function signOut() {
-                    var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signOut().then(function () {
-                        var profPic = document.getElementById("profile-picture");
-                        profPic.style.visibility = "hidden";
-                        var logOut = document.getElementById("logout");
-                        logOut.style.display = "none";
-                    });
+                    $.post("destroySession.php", {session:"destroy"}, 
+					function success(e) {
+						console.log(e);
+					});
+					location.reload();
                   }
             </script>
 		</div>

@@ -189,5 +189,95 @@
 		"images":{
 		    "header":"Reziseable images"
 		}
+	},
+	{
+		"title":"Lorem Ipsum - Login",
+		"navbar":{
+			"header":"Login",
+			"menuitem1":{
+				"name":"Home",
+				"link":"/"
+			},
+			"menuitem2":{
+				"name":"The Lorem ipsum",
+				"link":"the-lorem-ipsum"
+			},
+			"menuitem3":{
+				"name":"Generator",
+				"link":"generator"
+			},
+			"menuitem4":{
+				"name":"Contact",
+				"link":"contact"
+			},
+			"menuitem5":{
+				"name":"Sign Out",
+				"link":"#",
+				"action":"signOut();"
+			}
+		},
+		"loginform":{
+		   "header":"Login" 
+		}
+	},
+	{
+		"title":"Lorem Ipsum - Register",
+		"navbar":{
+			"header":"Register",
+			"menuitem1":{
+				"name":"Home",
+				"link":"/"
+			},
+			"menuitem2":{
+				"name":"The Lorem ipsum",
+				"link":"the-lorem-ipsum"
+			},
+			"menuitem3":{
+				"name":"Generator",
+				"link":"generator"
+			},
+			"menuitem4":{
+				"name":"Contact",
+				"link":"contact"
+			},
+			"menuitem5":{
+				"name":"Sign Out",
+				"link":"#",
+				"action":"signOut();"
+			}
+		},
+		"loginform":{
+		   "header":"Register" 
+		}
+	},
+	{
+		"title":"Lorem Ipsum - Change Profile Picture",
+		"navbar":{
+			"header":"Change Profile Picture",
+			"menuitem1":{
+				"name":"Home",
+				"link":"/"
+			},
+			"menuitem2":{
+				"name":"The Lorem ipsum",
+				"link":"the-lorem-ipsum"
+			},
+			"menuitem3":{
+				"name":"Generator",
+				"link":"generator"
+			},
+			"menuitem4":{
+				"name":"Contact",
+				"link":"contact"
+			},
+			"menuitem5":{
+				"name":"Sign Out",
+				"link":"#",
+				"action":"signOut();"
+			}
+		},
+		"uploadpp":{
+		   "header":"Change Profile Picture" 
+		}
 	}
 ]
