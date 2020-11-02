@@ -38,7 +38,7 @@ if ($conn->connect_error) {
   die("Connection failed: ".$conn->connect_error);
 }
 
-$query = "SHOW TABLES LIKE 'Users'";
+/*$query = "SHOW TABLES LIKE 'Users'";
 if (!$conn->query($query)->fetch_assoc()) {
 
 	$query = "CREATE TABLE Users (
@@ -60,7 +60,7 @@ reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 	}
 } else {
 	echo "Table 'Users' exists!";
-}
+}*/
 
 $sql = "select * from Users";
 $res = $conn->query($sql);
