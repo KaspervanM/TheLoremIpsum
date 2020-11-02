@@ -14,7 +14,7 @@
         <link rel="stylesheet" media="screen" href="css/index.css">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
         <meta name="google-signin-client_id" content="967580510442-4fpfl1b3u31jmkki8df96g5r9ff5rqv9.apps.googleusercontent.com">
-	<meta name="google-site-verification" content="-pYbAikNl8lYD08ythOkJN-D0f0ipkJOF9cHXtwumyY" />
+	    <meta name="google-site-verification" content="-pYbAikNl8lYD08ythOkJN-D0f0ipkJOF9cHXtwumyY" />
 	</head>
 	<body>
 		<div class="navbar nav-block">
@@ -33,48 +33,39 @@
 				</menu>
 			</nav>
 			<div class="cont"><p><?php echo $jsonFile[0]["navbar"]["header"]; ?></p></div>
-			<div class="cont_google">
-    			<div class="g-signin2" data-onsuccess="onSuccess" data-onfailure="onFailure" data-theme="dark"></div>
+			<div class="nav_box">
+			    <button class="loginButton" onclick="window.location.href = 'http://thenewlorem.000webhostapp.com/login';">Login</button>
     			<img id="profile-picture">
+    			<button id="changePic" onclick="window.location.href = 'http://thenewlorem.000webhostapp.com/profilePic';">Change profile pic</button>
 			</div>
+		    
             <script async defer>
+            
                 function setPic(){
                     var profPic = document.getElementById("profile-picture");
-                    var dir = "/Users/".concat(<?php session_start(); if(isset($_SESSION['Email'])) echo '"'.$_SESSION['Email'].'"'; ?>).concat("/pp.jpg");
+                    var dir = " <?php session_start(); if(isset($_SESSION['Email'])) { $dir = "Users/".$_SESSION["Email"]."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
                     console.log(dir);
                     profPic.style.visibility = "visible";
                     profPic.src = dir;
-                    profPic.width = "50"
-                    profPic.height = "50";
-                }$(document).ready(setPic());
-                function onSuccess(googleUser) {
-                    setPic();
-                    var logOut = document.getElementById("logout");
-                    logOut.style.display = "block";
-                    var iname = profile.getFamilyName().split(" ");
-                    var lastname = iname.pop();
-                    $.post("DB_interface.php", {DB_interface:"insertuser", firstname:profile.getGivenName(), infix:iname.join(), lastname:lastname, username:profile.getEmail(), password:"", email:profile.getEmail(), google:"true", pp:profile.getImageUrl()},
-			   function success(e){
-			   	console.log("Sent request to server successfully! (1)");
-			    	console.log(e);
-			    	$.post("DB_interface.php", {DB_interface:"userverification", password:"", user:profile.getEmail(), google:"true"}, 
+                }
+                function start(){
+                    if(<?php session_start(); if(isset($_SESSION['Email'])) echo 'true'; else echo "false"; ?>) {
+                        $(".nav_box").addClass('nav_box_logged-in')
+                        $("#changePic").css("display","block");
+                        $("#logout").css("display","block");
+                        $(".loginButton").css("display","none");
+                        setPic();
+                    }else{
+                        $(".loginButton").css("display","block");
+                    }
+                }
+                $(document).ready(start());
+                  function signOut() {
+                    $.post("destroySession.php", {session:"destroy"},
 					function success(e) {
-						console.log("Sent request to server successfully! (2)"); 
 						console.log(e);
 					});
-		    });
-                }
-                function onFailure(error) {
-                    console.log(error);
-                }
-                  function signOut() {
-                    var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signOut().then(function () {
-                        var profPic = document.getElementById("profile-picture");
-                        profPic.style.visibility = "hidden";
-                        var logOut = document.getElementById("logout");
-                        logOut.style.display = "none";
-                    });
+					location.reload();
                   }
             </script>
 		</div>
