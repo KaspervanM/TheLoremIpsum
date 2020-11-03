@@ -70,7 +70,7 @@
 			    $_SESSION["Email"] = getUserData($user, "email");
 			    session_write_close();
 				die("SUCCESS: User verified: ".getUserData($user, "username"));
-			}else die("ERROR: Wrong credentials.");
+			}else die("STOPNOTE: Wrong credentials.");
 		}
 		
 		function changePP() {
