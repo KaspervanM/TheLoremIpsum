@@ -85,8 +85,8 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
     			<button id="loginbutton" action="submit"><span>Login</span></button>
     			<a href="http://thenewlorem.000webhostapp.com/register">Register</a>
     		    <div id="loginButton" class="g-signin2" data-onsuccess="onSuccess" data-onfailure="onFailure" data-theme="dark"></div>
+    		    <br/><p id="timer"></p>
     		</form><br/>
-    		<p id="timer"></p>
 		</section>
 		<script>
 		function countDown(count){
@@ -106,6 +106,8 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
 					function success(e){
 						console.log(e);
 						if (e.slice(0,7) == "SUCCESS") countDown(5);
+						else if (e.slice(0,8) == "STOPNOTE") $('#timer').text(e.slice(10));
+						else if (e.slice(0,5) == "ERROR") $('#timer').text(e);
 				});
 			});
 		</script>
