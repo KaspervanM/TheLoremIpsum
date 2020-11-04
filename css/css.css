@@ -26,8 +26,9 @@ body {
 	color: #888;
 	font-size: 14px;
 }
-*:focus{
-    outline: 1px solid red;
+:focus{
+    /*outline: 1px solid red;*/
+    outline: none;
 }
 *::selection{
     background-color: red;
@@ -90,27 +91,77 @@ blockquote:after {
   font-size: 2.5em;
   vertical-align:middle;
 }
-.cont_google{
+
+.nav_box{
     top:0;
     position: absolute;
+    right: 0;
     display: block;
     margin: auto;
-    width: 100%;
-    height: 100%;
-	z-index: -1;
+    width: 10vw;
+    min-width:70px;
+    height: 65px;
+    overflow:hidden;
+    z-index:1;
+    transition: height 1s;
+}
+
+.nav_box #changePic{
+    background-color: rgba(88, 88, 88, .2);
+    transition: background-color .5s;
+    color: black;
+    display: none;
+    height: auto;
+    width: 80px;
+	font-size: 14px;
+    border-radius: 4px;
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+    text-align: center;
+    cursor: pointer;
+    margin:auto;
+}
+.nav_box_logged-in:hover{
+    height:160px;
+}
+
+.nav_box_logged-in #changePic:hover{
+    background-color: rgba(111, 111, 111, 1);
+}
+
+.loginButton{
+    padding: 10px;
+	right: 0;
+	width:100px;
+	display:block;
+	background:black;
+	margin-top:10px;
+}
+
+.loginButton:hover, .loginButton:focus{
+    background-color: whitesmoke;
+    color: black;
 }
 
 #profile-picture {
+    display:block;
+    z-index:2;
     padding: 10px;
-	float: right;
+    cursor:pointer;
+    margin:auto;
+	width: 50px;
+	height: 50px;
+    object-fit: cover;
+    object-position: 50% 50%; /* try 20px 10px */ 
 }
 #logout {
     display: none;
 }
+#changePic {
+    display: none;
+}
 .g-signin2 {
-    padding: 15px;
-	float: right;
-    margin-right: 1%;
     width: 100px;
     height: 20px;
 }
