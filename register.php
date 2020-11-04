@@ -1,7 +1,7 @@
 <?php 
 $jsonFile = json_decode(file_get_contents("data.json"), true);
 session_start();
-if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostapp.com/");
+if (isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.com/");
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,28 +35,6 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
 			<div class="cont"><p><?php echo $jsonFile[5]["navbar"]["header"]; ?></p></div>
 			</div>
             <script async defer>
-            
-                function setPic(){
-                    var profPic = document.getElementById("profile-picture");
-                    var dir = "/Users/".concat(<?php session_start(); if(isset($_SESSION['Email'])) echo '"'.$_SESSION['Email'].'"'; ?>).concat("/pp.jpg");
-                    console.log(dir);
-                    profPic.style.visibility = "visible";
-                    profPic.src = dir;
-                    profPic.width = "50"
-                    profPic.height = "50";
-                }
-                function start(){
-                    console.log(0);
-                    if(<?php session_start(); if(isset($_SESSION['Email'])) echo 'true'; else echo "false"; ?>) {
-                        $("#changePic").css("display","block");
-                        $("#logout").css("display","block");
-                        $(".loginButton").css("display","none");
-                        setPic();
-                    }else{
-                        $(".loginButton").css("display","block");
-                    }
-                }
-                $(document).ready(start());
                 
                 function onSuccess(googleUser) {
                     start();
@@ -82,7 +60,6 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
                     auth2.signOut().then(function () {});
                     $.post("destroySession.php", {session:"destroy"}, 
 					function success(e) {
-						console.log("hi");
 						console.log(e);
 					});
 					location.reload();
@@ -106,8 +83,8 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
     			<input type="hidden" name="DB_interface" value="insertUser"/>
     			<br/>
     			<button action="submit"><span>Add</span></button>
+    	    	<p id="timer"></p>
     		</form><br/>
-    		<p id="timer"></p>
 		</section>
 		<script>
 		    function countDown(count){
@@ -127,6 +104,8 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
 					function success(e){
 						console.log(e);
 						if (e.slice(0,7) == "SUCCESS") countDown(5);
+						else if (e.slice(0,8) == "STOPNOTE") $('#timer').text(e.slice(10));
+						else if (e.slice(0,5) == "ERROR") $('#timer').text(e);
 				});
 			});
 		</script>
