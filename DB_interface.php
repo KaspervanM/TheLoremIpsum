@@ -21,7 +21,7 @@
 
 			$query = "INSERT INTO Users (username, password, firstname, infix, lastname, email) VALUES ('$username', '$password', '$firstname', '$infix', '$lastname', '$email')";
 			if ($conn->query($query) === true) {
-			    $dir = 'Users/'.$email;
+			    $dir = 'Users/'.getUserData($username, "id");
 			    if(is_dir($dir) === false)  mkdir($dir);
 			    if(isset($_POST["google"])){
 			        file_put_contents($dir.'/pp.jpg', file_get_contents($_POST['pp']));
@@ -33,10 +33,11 @@
 
 		function getUserData($user, $select = "*"){
 			global $conn;
-
+			
 			$query = "SELECT $select FROM Users WHERE username = '$user' OR email = '$user'";
 			if ($conn->query($query)) {
-				return($conn->query($query)->fetch_assoc()[$select]);
+			    if(strpos($select, ",")) return($conn->query($query)->fetch_assoc());
+				else return($conn->query($query)->fetch_assoc()[$select]);
 			}
 		}
 
@@ -44,12 +45,18 @@
 		    if (hash("sha256", $pass) != "9983ac69c4a003452620c01f51b991912ac6f4cb899e36e795faa2a7c7f38603") die("STOPNOTE: Admin password is wrong.");
 		    
 			global $conn;
-			$query = "SELECT 1 FROM Users WHERE username = '$user' OR email = '$user'";
+			$query = "SELECT 1 FROM Users WHERE username like '$user' OR email like '$user'";
 			if ($conn->query($query)->fetch_assoc()) {
-			    $dir = "Users/".getUserData($user, "email")."/";
-				$query = "DELETE FROM Users WHERE username = '$user' OR email = '$user'";
-    			if ($conn->query($query)) {
-    			    if(is_dir($dir)) {array_map('unlink', glob($dir."*")); rmdir($dir);}
+				$query = "SELECT id FROM Users WHERE username like '$user' OR email like '$user'";
+    			if ($results = $conn->query($query)) {
+    			    foreach($results as $result) {
+    			        $dir = "Users/".$result["id"]."/";
+    			        array_map('unlink', glob($dir."*"));
+    			        rmdir($dir);
+    			        echo $dir.'\n';
+    			    }
+    			    $query = "DELETE FROM Users WHERE username like '$user' OR email like '$user'";
+        			$conn->query($query);
     				die("SUCCESS: User removed successfully.");
     			}else die("ERROR: $query <br> $conn->error");
 			}else die("STOPNOTE: User does not exist.");
@@ -68,19 +75,20 @@
 			    session_start();
 			    $_SESSION["User"] = getUserData($user, "username");
 			    $_SESSION["Email"] = getUserData($user, "email");
+			    $_SESSION["id"] = getUserData($user, "id");
 			    session_write_close();
 				die("SUCCESS: User verified: ".getUserData($user, "username"));
-			}else die("ERROR: Wrong credentials.");
+			}else die("STOPNOTE: Wrong credentials.");
 		}
 		
 		function changePP() {
 		    session_start();
 		    
 			if (!isset($_SESSION['Email'])) {
-				die("STOPNOTE: User does not exist.");
+				die("STOPNOTE: User is not logged in.");
 			}
 			
-		    $dir = "Users/".$_SESSION["Email"]."/";
+		    $dir = "Users/".$_SESSION["id"]."/";
 	        // Undefined | Multiple Files | $_FILES Corruption Attack
             // If this request falls under any of them, treat it invalid.
             if (
@@ -103,11 +111,6 @@
                     die('STOPNOTE: Unknown errors.');
             }
         
-            // You should also check filesize here.
-            if ($_FILES['pp']['size'] > 10000000) {
-                die('STOPNOTE: Exceeded filesize limit.');
-            }
-        
             // DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
             // Check MIME Type by yourself.
             $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -121,12 +124,29 @@
             )) {
                 die('STOPNOTE: Invalid file format.');
             }
-            //Delete old pic
+            
+            // START IMAGE COMPRESSION
+            list($oldWidth, $oldHeight) = getimagesize($_FILES['pp']['tmp_name']);
+            
+            // Resize
+            if($oldWidth < 100 or $oldHeight < 100) die("STOPNOTE: Picture is too small!");
+            $ratio = max(100/$oldWidth, 100/$oldHeight);
+            $oldHeight = 100 / $ratio;
+            $x = ($oldWidth - 100 / $ratio) / 2;
+            $oldWidth = 100 / $ratio;
+            
+            // Resample
+            if ($ext == 'jpg') $oldImage = imagecreatefromjpeg($_FILES['pp']['tmp_name']);
+            elseif ($ext == 'png') $oldImage = imagecreatefrompng($_FILES['pp']['tmp_name']);
+            $newImage = imagecreatetruecolor(100, 100);
+            imagecopyresampled($newImage, $oldImage, 0, 0, $x, 0, 100, 100, $oldWidth, $oldHeight);
+            // END IMAGE COMPRESSION
+            
+            // Delete old pic
             array_map('unlink', glob($dir."*"));
-            // Compress image
-            if ($finfo->file($_FILES['pp']['tmp_name']) == 'image/jpeg') $image = imagecreatefromjpeg($_FILES['pp']['tmp_name']);
-            elseif ($finfo->file($_FILES['pp']['tmp_name']) == 'image/png') $image = imagecreatefrompng($_FILES['pp']['tmp_name']);
-            if (!imagejpeg($image, $dir."pp.jpg", 60)) die('Failed to move uploaded file.');
+            
+            // Upload and reduce palette quality by 50%
+            if (!imagejpeg($newImage, $dir."pp.jpg", 50)) die('STOPNOTE: Failed to move uploaded file.');
             $_SESSION['reload'] = "true";
             die('SUCCESS: File is uploaded successfully.');
         }
@@ -136,7 +156,7 @@
 					insertUser($_POST["username"], $_POST["password"], $_POST["firstname"], $_POST["infix"], $_POST["lastname"], $_POST["email"]);
 					break;
 			case "getuserdata":
-					getUserData($_POST["user"]);
+					die(json_encode(getUserData($_POST["user"], $_POST["select"])));
 					break;
 			case "removeuser":
 					removeUser($_POST["user"], $_POST["pass"]);
@@ -150,5 +170,5 @@
 			default:
 					die();
 		}
-	}else die("dead");
+	}else die("STOPNOTE: No action was requested.");
 ?>
