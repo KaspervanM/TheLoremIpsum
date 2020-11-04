@@ -43,13 +43,13 @@
             
                 function setPic(){
                     var profPic = document.getElementById("profile-picture");
-                    var dir = " <?php session_start(); if(isset($_SESSION['Email'])) { $dir = "Users/".$_SESSION["Email"]."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
+                    var dir = " <?php session_start(); if(isset($_SESSION['id'])) { $dir = "Users/".$_SESSION['id']."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
                     console.log(dir);
                     profPic.style.visibility = "visible";
                     profPic.src = dir;
                 }
                 function start(){
-                    if(<?php session_start(); if(isset($_SESSION['Email'])) echo 'true'; else echo "false"; ?>) {
+                    if(<?php session_start(); if(isset($_SESSION['id'])) echo 'true'; else echo "false"; ?>) {
                         $(".nav_box").addClass('nav_box_logged-in')
                         $("#changePic").css("display","block");
                         $("#logout").css("display","block");
