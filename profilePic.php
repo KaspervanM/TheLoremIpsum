@@ -1,6 +1,6 @@
 <?php $jsonFile = json_decode(file_get_contents("data.json"), true);
 session_start();
-if (!isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostapp.com/");
+if (!isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.com/");
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,14 +36,13 @@ if (!isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhosta
 			<script async defer>
                 function setPic(){
                     var profPic = document.getElementById("profile-picture");
-                    var dir = " <?php session_start(); if(isset($_SESSION['Email'])) { $dir = "Users/".$_SESSION["Email"]."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
+                    var dir = " <?php session_start(); if(isset($_SESSION['id'])) { $dir = "Users/".$_SESSION['id']."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
                     console.log(dir);
                     profPic.style.visibility = "visible";
                     profPic.src = dir;
                 }
                 function start(){
-                    <?php if(isset($SESSION['reload'])) {unset($SESSION['reload']); echo "location.reload(true);";} ?>
-                    if(<?php session_start(); if(isset($_SESSION['Email'])) echo 'true'; else echo "false"; ?>) {
+                    if(<?php session_start(); if(isset($_SESSION['id'])) echo 'true'; else echo "false"; ?>) {
                         $(".nav_box").addClass('nav_box_logged-in')
                         $("#changePic").css("display","block");
                         $("#logout").css("display","block");
@@ -98,7 +97,11 @@ if (!isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhosta
                     processData:false,
                     success: function(e){
                         console.log(e);
-                        if (e.slice(0,7) == "SUCCESS") countDown(5);
+                        if (e.slice(0,7) == "SUCCESS") {
+                            countDown(5);
+                        } else {
+                            $("#timer").text(e);
+                        }
                     },
                     error: function(){} 	        
                 });
