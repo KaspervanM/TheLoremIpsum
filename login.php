@@ -1,7 +1,7 @@
 <?php 
 $jsonFile = json_decode(file_get_contents("data.json"), true);
 session_start();
-if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostapp.com/");
+if (isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.com/");
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,37 +37,24 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
                 
                 function onSuccess(googleUser) {
                     var profile = googleUser.getBasicProfile();
-                    var iname = profile.getFamilyName().split(" ");
-                    var lastname = iname.pop();
-                    $.post("DB_interface.php", {DB_interface:"insertuser", firstname:profile.getGivenName(), infix:iname.join(), lastname:lastname, username:profile.getEmail(), password:"", email:profile.getEmail(), google:"true", pp:profile.getImageUrl()},
-			            function success(e){
-			   	            console.log("Sent request to server successfully! (1)");
-			    	        console.log(e);
-			    	        $.post("DB_interface.php", {DB_interface:"userverification", password:"", user:profile.getEmail(), google:"true"}, 
-					            function success(e) {
-						            console.log("Sent request to server successfully! (2)"); 
-						            console.log(e);
-						            if (e.slice(0,7) == "SUCCESS") {
-						                var auth2 = gapi.auth2.getAuthInstance();
-                                        auth2.signOut().then(function () {
-                                          console.log('Login sucessful on SQL, google logged out.');
-                                        });
-						                countDown(5);
-						            }
-					        });
-	                });
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut();
+	    	        $.post("DB_interface.php", {DB_interface:"userverification", password:"", user:profile.getEmail(), google:"true"}, 
+			            function success(e) {
+				            if (e.slice(0,7) == "SUCCESS") {
+				                countDown(5);
+				            } else if (e.slice(0,8) == "STOPNOTE") $('#timer').text(e.slice(10));
+						    else if (e.slice(0,5) == "ERROR") $('#timer').text(e);
+			        });
+			        
                 }
                 function onFailure(error) {
                     console.log(error);
                 }
                   function signOut() {
                     var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signOut().then(function () {});
-                    $.post("destroySession.php", {session:"destroy"}, 
-					function success(e) {
-						console.log("hi");
-						console.log(e);
-					});
+                    auth2.signOut();
+                    $.post("destroySession.php", {session:"destroy"}, function success(e) {;;});
 					location.reload();
                   }
             </script>
@@ -85,8 +72,8 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
     			<button id="loginbutton" action="submit"><span>Login</span></button>
     			<a href="http://thenewlorem.000webhostapp.com/register">Register</a>
     		    <div id="loginButton" class="g-signin2" data-onsuccess="onSuccess" data-onfailure="onFailure" data-theme="dark"></div>
+    		    <br/><p id="timer"></p>
     		</form><br/>
-    		<p id="timer"></p>
 		</section>
 		<script>
 		function countDown(count){
@@ -104,10 +91,14 @@ if (isset($_SESSION['User'])) header("Location: https://thenewlorem.000webhostap
 				var arr = $(this).serializeArray();
 				$.post("DB_interface", {DB_interface:arr[2]["value"], user:arr[0]["value"], password:arr[1]["value"]},
 					function success(e){
-						console.log(e);
 						if (e.slice(0,7) == "SUCCESS") countDown(5);
+						else if (e.slice(0,8) == "STOPNOTE") $('#timer').text(e.slice(10));
+						else if (e.slice(0,5) == "ERROR") $('#timer').text(e);
 				});
 			});
 		</script>
+		<footer>
+			<p><?php echo $jsonFile[0]["footer"]; ?></p><p>©Esper VOF 2020</p>
+		</footer>
 	</body>
 </html>
