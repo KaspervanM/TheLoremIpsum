@@ -37,7 +37,6 @@ if (!isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp
                 function setPic(){
                     var profPic = document.getElementById("profile-picture");
                     var dir = " <?php session_start(); if(isset($_SESSION['id'])) { $dir = "Users/".$_SESSION['id']."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
-                    console.log(dir);
                     profPic.style.visibility = "visible";
                     profPic.src = dir;
                 }
@@ -54,10 +53,7 @@ if (!isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp
                 }
                 $(document).ready(start());
                   function signOut() {
-                    $.post("destroySession.php", {session:"destroy"}, 
-					function success(e) {
-						console.log(e);
-					});
+                    $.post("destroySession.php", {session:"destroy"}, function success(e) {;;});
 					location.reload();
                   }
             </script>
@@ -96,12 +92,10 @@ if (!isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp
                     cache: false,
                     processData:false,
                     success: function(e){
-                        console.log(e);
                         if (e.slice(0,7) == "SUCCESS") {
                             countDown(5);
-                        } else {
-                            $("#timer").text(e);
-                        }
+                        } else if (e.slice(0,8) == "STOPNOTE") $('#timer').text(e.slice(10));
+						  else if (e.slice(0,5) == "ERROR") $('#timer').text(e);
                     },
                     error: function(){} 	        
                 });
