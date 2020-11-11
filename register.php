@@ -33,22 +33,22 @@ if (isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.
 				</menu>
 			</nav>
 			<div class="cont"><p><?php echo $jsonFile[5]["navbar"]["header"]; ?></p></div>
-			</div>
             <script async defer>
                 
                 function onSuccess(googleUser) {
-                    start();
                     var profile = googleUser.getBasicProfile();
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut();
                     var iname = profile.getFamilyName().split(" ");
                     var lastname = iname.pop();
                     $.post("DB_interface.php", {DB_interface:"insertuser", firstname:profile.getGivenName(), infix:iname.join(), lastname:lastname, username:profile.getEmail(), password:"", email:profile.getEmail(), google:"true", pp:profile.getImageUrl()},
 			            function success(e){
-			   	            console.log("Sent request to server successfully! (1)");
-			    	        console.log(e);
 			    	        $.post("DB_interface.php", {DB_interface:"userverification", password:"", user:profile.getEmail(), google:"true"}, 
 					            function success(e) {
-						            console.log("Sent request to server successfully! (2)"); 
-						            console.log(e);
+						            if (e.slice(0,7) == "SUCCESS") {
+						                countDown(5);
+						            } else if (e.slice(0,8) == "STOPNOTE") $('#timer').text(e.slice(10));
+						            else if (e.slice(0,5) == "ERROR") $('#timer').text(e);
 					        });
 	                });
                 }
@@ -57,11 +57,8 @@ if (isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.
                 }
                   function signOut() {
                     var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signOut().then(function () {});
-                    $.post("destroySession.php", {session:"destroy"}, 
-					function success(e) {
-						console.log(e);
-					});
+                    auth2.signOut();
+                    $.post("destroySession.php", {session:"destroy"}, function success(e) {;;});
 					location.reload();
                   }
             </script>
@@ -73,7 +70,7 @@ if (isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.
     			<input name="firstname" id="firstname" type="text" required autocomplete="given-name" placeholder="Name"/> <input name="infix" id="infix" type="text" size="3" value="" autocomplete="additional-name" placeholder="infix"/> <input name="lastname" id="lastname" type="text" required autocomplete="family-name" placeholder="Surname"/>
     			<br/>
     			<br/>
-    			<input name="username" type="text" required autocomplete="username" placeholder="Username"/>
+    			<input name="username" type="text" pattern="^[a-zA-Z0-9]*$" required autocomplete="username" placeholder="Username"/>
     			<br/>
     			<br/>
     			<input name="password" type="password" required autocomplete="new-password" placeholder="Password"/>
@@ -82,7 +79,8 @@ if (isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.
     			<input name="email" id="email" type="email" required placeholder="E-mail address"/>
     			<input type="hidden" name="DB_interface" value="insertUser"/>
     			<br/>
-    			<button action="submit"><span>Add</span></button>
+    			<button action="submit"><span>Register</span></button>
+    			<div id="loginButton" class="g-signin2" data-onsuccess="onSuccess" data-onfailure="onFailure" data-theme="dark"></div>
     	    	<p id="timer"></p>
     		</form><br/>
 		</section>
@@ -102,13 +100,15 @@ if (isset($_SESSION['id'])) header("Location: https://thenewlorem.000webhostapp.
 				var arr = $(this).serializeArray();
 				$.post("DB_interface", {DB_interface:arr[6]["value"], firstname:arr[0]["value"], infix:arr[1]["value"], lastname:arr[2]["value"], username:arr[3]["value"], password:arr[4]["value"], email:arr[5]["value"]},
 					function success(e){
-						console.log(e);
 						if (e.slice(0,7) == "SUCCESS") countDown(5);
 						else if (e.slice(0,8) == "STOPNOTE") $('#timer').text(e.slice(10));
 						else if (e.slice(0,5) == "ERROR") $('#timer').text(e);
 				});
 			});
 		</script>
+		<footer>
+			<p><?php echo $jsonFile[0]["footer"]; ?></p><p>©Esper VOF 2020</p>
+		</footer>
 	</body>
 </html>
 
