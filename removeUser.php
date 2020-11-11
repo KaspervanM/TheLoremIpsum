@@ -1,7 +1,9 @@
+
 <?php
 session_start();
-if (!isset($_SESSION['id']))
-    if (!($_SESSION['User'] === "evan.pacini@gmail.com" || $_SESSION['User'] === "maasdam03@gmail.com" || $_SESSION['User'] === "kaspervam@gmail.com" || $_SESSION['User'] === "Kuijlaars")) header("Location: https://thenewlorem.000webhostapp.com/");
+if (isset($_SESSION['id'])){
+    if (!($_SESSION['Email'] == "evan.pacini@gmail.com" || $_SESSION['Email'] == "maasdam03@gmail.com" || $_SESSION['Email'] == "kaspervanm@gmail.com" || $_SESSION['User'] == "Kuijlaars")) header("Location: https://thenewlorem.000webhostapp.com/");}
+    else header("Location: https://thenewlorem.000webhostapp.com/");
 ?>
 <!DOCTYPE html>
 <html>
