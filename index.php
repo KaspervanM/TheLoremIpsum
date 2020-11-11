@@ -44,7 +44,6 @@
                 function setPic(){
                     var profPic = document.getElementById("profile-picture");
                     var dir = " <?php session_start(); if(isset($_SESSION['id'])) { $dir = "Users/".$_SESSION['id']."/"; if (file_exists($dir . "pp.jpg")) {echo $dir . "pp.jpg";} else {echo "Users/Default/pp.jpg";} echo "?".rand(0,10000000);} ?>";
-                    console.log(dir);
                     profPic.style.visibility = "visible";
                     profPic.src = dir;
                 }
@@ -61,10 +60,7 @@
                 }
                 $(document).ready(start());
                   function signOut() {
-                    $.post("destroySession.php", {session:"destroy"},
-					function success(e) {
-						console.log(e);
-					});
+                    $.post("destroySession.php", {session:"destroy"}, function success(e) {;;});
 					location.reload();
                   }
             </script>
@@ -140,7 +136,7 @@
 			<a href=<?php echo "\"".$jsonFile[0]["section4"]["link2"]["link"]."\" title=\"".$jsonFile[0]["section4"]["link2"]["title"]."\""; ?>><?php echo $jsonFile[0]["section4"]["link2"]["text"]; ?></a>
 		</section>
 		<footer>
-			<p><?php echo $jsonFile[0]["footer"]; ?></p><p>©Esper VOF 2019</p>
+			<p><?php echo $jsonFile[0]["footer"]; ?></p><p>©Esper VOF 2020</p>
 		</footer>
 		<script async>
 		    //Load images and videos only after this script was loaded
